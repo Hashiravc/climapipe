@@ -4,7 +4,7 @@ published: false
 description: "Guía práctica de Ingeniería de Datos: diseño e implementación de un pipeline ELT en la nube para procesar datos climáticos de Perú con Open-Meteo, Neon, dbt Core, Streamlit y GitHub Actions."
 tags: dataengineering, python, postgres, dbt
 canonical_url: https://github.com/Hashiravc/climapipe
-cover_image: https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/PostgreSQL-Dark.svg
+cover_image: https://raw.githubusercontent.com/Hashiravc/climapipe/main/docs/images/dashboard-live.jpg
 ---
 
 # Construyendo un pipeline ELT automatizado con Python, dbt, PostgreSQL y GitHub Actions
@@ -173,11 +173,14 @@ Diseñado para la sincronización periódica de datos:
 Para el consumo analítico, desarrollamos un dashboard interactivo en `app/main.py`. Entre sus características destacan:
 * **Badge de estado en vivo:** Lee la tabla `raw.pipeline_runs` y muestra la marca temporal de la última corrida exitosa y el número de filas sincronizadas.
 * **Separación de privilegios:** El dashboard se conecta a PostgreSQL utilizando un rol de base de datos de solo lectura (`streamlit_reader`), imposibilitando modificaciones accidentales de los datos.
-* **Visualizaciones con Plotly:**
+* **Visualizaciones interactivas con Plotly:**
   * Curvas de temperatura diaria con bandas sombreadas del rango térmico y media móvil de 30 días para resaltar tendencias estacionales.
   * Gráfico de barras de precipitación acumulada con eje secundario de días con lluvia.
   * Pestaña comparativa multiciudad que contrasta el clima hiperárido de Tacna frente a las lluvias estivales de Arequipa y la humedad costera de Lima.
 * **Modo resiliente sin conexión:** En caso de que la conexión a la base de datos no esté configurada en el entorno local, el aplicativo activa automáticamente un generador de muestras calibrado con los perfiles climáticos peruanos, evitando bloqueos de interfaz.
+
+![Dashboard ClimaData Perú en Streamlit Community Cloud](https://raw.githubusercontent.com/Hashiravc/climapipe/main/docs/images/dashboard-live.jpg)
+*Figura 1: Interfaz analítica del dashboard ClimaData Perú desplegado en vivo en Streamlit Community Cloud ([https://climadata-peru.streamlit.app/](https://climadata-peru.streamlit.app/)). Se aprecian los KPIs dinámicos de Tacna, la descomposición de la serie temporal térmica con banda de oscilación y la barra mensual de precipitaciones.*
 
 ---
 
@@ -185,7 +188,7 @@ Para el consumo analítico, desarrollamos un dashboard interactivo en `app/main.
 
 El despliegue se estructuró enteramente sobre capas gratuitas:
 1. **Neon PostgreSQL:** Se creó el proyecto en Neon, ejecutando los scripts DDL en `sql/01_init_schema.sql` y `sql/02_create_roles.sql`.
-2. **Streamlit Community Cloud:** Se vinculó el repositorio de GitHub al servicio en la nube, apuntando a `app/main.py` y configurando el secreto `NEON_DATABASE_URL` en la interfaz de administración. Cada nuevo push a la rama `main` dispara automáticamente la actualización del despliegue.
+2. **Streamlit Community Cloud:** Se vinculó el repositorio de GitHub al servicio en la nube, apuntando a `app/main.py` y configurando el secreto `NEON_DATABASE_URL` en la interfaz de administración. La aplicación se encuentra en línea y accesible públicamente en [https://climadata-peru.streamlit.app/](https://climadata-peru.streamlit.app/). Cada nuevo push a la rama `main` dispara automáticamente la actualización del despliegue sin intervención manual.
 
 ---
 
