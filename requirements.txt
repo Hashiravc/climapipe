@@ -1,0 +1,29 @@
+# ==========================================
+# ClimaData Perú - Dependencies
+# ==========================================
+
+# Data extraction & HTTP handling
+requests>=2.31.0,<3.0.0
+urllib3>=2.0.0,<3.0.0
+tenacity>=8.3.0,<10.0.0
+
+# Data manipulation & analysis
+pandas>=2.2.0,<3.0.0
+numpy>=1.26.0,<3.0.0
+
+# Database connectivity
+psycopg2-binary>=2.9.9; python_version < '3.13'
+psycopg[binary]>=3.2.0
+SQLAlchemy>=2.0.30,<3.0.0
+
+# Environment & Settings
+python-dotenv>=1.0.1,<2.0.0
+pydantic>=2.7.0,<3.0.0
+
+# Data Transformation (dbt)
+dbt-core>=1.8.0,<1.9.0
+dbt-postgres>=1.8.0,<1.9.0
+
+# Visualization & Dashboard
+streamlit>=1.36.0,<2.0.0
+plotly>=5.22.0,<6.0.0

@@ -1,0 +1,49 @@
+version: 2
+
+sources:
+  - name: raw
+    database: "{{ env_var('DB_NAME', 'neondb') }}"
+    schema: raw
+    description: "Capa de ingesta directa de datos crudos provenientes de Open-Meteo."
+    tables:
+      - name: weather_daily
+        description: "Observaciones meteorológicas diarias de Tacna, Arequipa y Lima."
+        columns:
+          - name: city_code
+            description: "Código identificador de la ciudad (TAC, AQP, LIM)."
+            data_tests:
+              - not_null
+          - name: date
+            description: "Fecha de la observación meteorológica."
+            data_tests:
+              - not_null
+
+models:
+  - name: stg_weather_daily
+    description: "Modelo staging: estandarización de tipos, cálculo de amplitud térmica e indicadores de precipitación."
+    columns:
+      - name: observation_id
+        description: "Clave subrogada única de la observación (código de ciudad + fecha)."
+        data_tests:
+          - unique
+          - not_null
+      - name: city_code
+        description: "Código de la ciudad (TAC, AQP, LIM)."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['TAC', 'AQP', 'LIM']
+      - name: city_name
+        description: "Nombre canónico de la ciudad."
+        data_tests:
+          - not_null
+      - name: observation_date
+        description: "Fecha de la medición."
+        data_tests:
+          - not_null
+      - name: temperature_range_c
+        description: "Amplitud térmica calculada (temperatura máxima - mínima)."
+      - name: is_rainy_day
+        description: "Bandera booleana: TRUE si la precipitación acumulada supera 0.1 mm."
+        data_tests:
+          - not_null

@@ -1,0 +1,89 @@
+version: 2
+
+models:
+  - name: dim_cities
+    description: "Tabla de dimensión de ciudades peruanas con caracterización geográfica y pisos ecológicos."
+    columns:
+      - name: city_code
+        description: "Código identificador primario de la ciudad (TAC, AQP, LIM)."
+        data_tests:
+          - unique
+          - not_null
+      - name: city_name
+        description: "Nombre de la ciudad."
+        data_tests:
+          - not_null
+      - name: region
+        description: "Región natural (Costa o Sierra)."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['Costa', 'Sierra']
+
+  - name: fct_weather_daily
+    description: "Tabla de hechos de observaciones climáticas a nivel de grano diario."
+    columns:
+      - name: observation_id
+        description: "Identificador único de la observación."
+        data_tests:
+          - unique
+          - not_null
+      - name: city_code
+        description: "Clave foránea hacia dim_cities."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_cities')
+              field: city_code
+      - name: observation_date
+        description: "Fecha de la observación."
+        data_tests:
+          - not_null
+      - name: temperature_mean_c
+        description: "Temperatura media diaria en grados Celsius."
+        data_tests:
+          - not_null
+
+  - name: agg_weather_monthly
+    description: "Agregaciones meteorológicas mensuales por ciudad."
+    columns:
+      - name: monthly_id
+        description: "Clave primaria calculada para el mes y ciudad."
+        data_tests:
+          - unique
+          - not_null
+      - name: city_code
+        description: "Clave foránea hacia dim_cities."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_cities')
+              field: city_code
+      - name: avg_temperature_c
+        description: "Temperatura media promedio mensual."
+        data_tests:
+          - not_null
+      - name: total_precipitation_mm
+        description: "Precipitación acumulada mensual en milímetros."
+        data_tests:
+          - not_null
+
+  - name: agg_weather_yearly
+    description: "Resumen climático anual por ciudad."
+    columns:
+      - name: yearly_id
+        description: "Clave primaria calculada para el año y ciudad."
+        data_tests:
+          - unique
+          - not_null
+      - name: city_code
+        description: "Clave foránea hacia dim_cities."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_cities')
+              field: city_code
+      - name: annual_avg_temperature_c
+        description: "Temperatura media anual."
+        data_tests:
+          - not_null
