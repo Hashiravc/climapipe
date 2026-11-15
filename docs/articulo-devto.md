@@ -7,8 +7,6 @@ canonical_url: https://github.com/Hashiravc/climapipe
 cover_image: https://raw.githubusercontent.com/Hashiravc/climapipe/main/docs/images/dashboard-live.jpg
 ---
 
-# Construyendo un pipeline ELT automatizado con Python, dbt, PostgreSQL y GitHub Actions
-
 ## 1. Introducción al problema de ingeniería de datos
 
 En proyectos de análisis de datos del mundo real, uno de los desafíos más habituales no radica únicamente en calcular métricas estadísticas o generar gráficos atractivos, sino en garantizar que la ingestión, persistencia y transformación de la información ocurran de forma **confiable, desatendida y reproducible**.
@@ -50,17 +48,24 @@ La selección tecnológica responde a criterios de robustez, compatibilidad con 
 
 A diferencia de los pipelines ETL tradicionales donde los datos se transforman en memoria antes de ingresar a la base de datos, en este proyecto adoptamos el enfoque **ELT**:
 
-```mermaid
-flowchart TD
-    A[Open-Meteo ERA5 API] -->|Extracción JSON con Reintentos| B[Cliente Python]
-    B -->|Carga Idempotente UPSERT| C[(PostgreSQL en Neon - Esquema raw)]
-    C -->|dbt run| D[Capa Staging: stg_weather_daily]
-    D -->|Modelado Dimensional| E[(Esquema marts)]
-    E --> F[marts.dim_cities]
-    E --> G[marts.fct_weather_daily]
-    G --> H[marts.agg_weather_monthly]
-    G --> I[marts.agg_weather_yearly]
-    E -->|Consultas SQL Read-Only| J[Dashboard Streamlit]
+```text
+[ 📡 Open-Meteo ERA5 API ]
+           │
+           │ (Extracción JSON con Reintentos y Backoff)
+           ▼
+[ 🔄 Extractor Python (OpenMeteoExtractor) ]
+           │
+           │ (Carga Idempotente UPSERT)
+           ▼
+[ 🗄️ PostgreSQL en Neon (Esquema raw: raw.weather_daily, raw.pipeline_runs) ]
+           │
+           │ (dbt build: Staging + Marts)
+           ▼
+[ ⚙️ Modelos dbt Core (dim_cities, fct_weather_daily, agg_weather_monthly, agg_weather_yearly) ]
+           │
+           │ (Consultas SQL de Solo Lectura)
+           ▼
+[ 📊 Dashboard Streamlit (https://climadata-peru.streamlit.app/) ]
 ```
 
 ### Ventajas del enfoque adoptado:
@@ -249,4 +254,4 @@ Durante el desarrollo se presentaron los siguientes desafíos técnicos:
 
 * **Código fuente en GitHub:** [https://github.com/Hashiravc/climapipe](https://github.com/Hashiravc/climapipe)
 * **Dashboard interactivo en la nube:** [https://climadata-peru.streamlit.app/](https://climadata-peru.streamlit.app/)
-* **Guion del video demostrativo:** [docs/video-script.md](docs/video-script.md)
+* **Guion del video demostrativo:** [docs/video-script.md](https://github.com/Hashiravc/climapipe/blob/main/docs/video-script.md)
