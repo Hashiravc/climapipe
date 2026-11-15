@@ -2,7 +2,7 @@
 
 [![CI - Integración Continua](https://github.com/Hashiravc/climapipe/actions/workflows/ci.yml/badge.svg)](https://github.com/Hashiravc/climapipe/actions/workflows/ci.yml)
 [![Pipeline ELT Automatizado](https://github.com/Hashiravc/climapipe/actions/workflows/pipeline.yml/badge.svg)](https://github.com/Hashiravc/climapipe/actions/workflows/pipeline.yml)
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://climadata-peru.streamlit.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
@@ -282,8 +282,17 @@ El repositorio cuenta con dos flujos de trabajo en `.github/workflows/`:
 
 ---
 
+## 📸 Evidencia del Dashboard Desplegado en la Nube
+
+![Dashboard ClimaData Perú en Vivo](docs/images/dashboard-live.jpg)
+
+*Panel público interactivo desplegado en Streamlit Community Cloud accesible en [https://climadata-peru.streamlit.app/](https://climadata-peru.streamlit.app/).*
+
+---
+
 ## 🔗 Enlaces del Proyecto
 
+* **Dashboard Desplegado en la Nube**: [https://climadata-peru.streamlit.app/](https://climadata-peru.streamlit.app/)
 * **Repositorio en GitHub**: [https://github.com/Hashiravc/climapipe](https://github.com/Hashiravc/climapipe)
 * **Artículo Técnico en DEV.to**: Documento maestro disponible en [docs/articulo-devto.md](docs/articulo-devto.md)
 * **Guion del Video Académico (5 min)**: Disponible en [docs/video-script.md](docs/video-script.md)

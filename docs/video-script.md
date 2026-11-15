@@ -48,7 +48,7 @@
 ---
 
 ### Bloque 5: Dashboard Desplegado en Streamlit (3:15 – 4:30)
-* **Pantalla:** Dashboard interactivo de Streamlit en vivo.
+* **Pantalla:** Dashboard interactivo desplegado en la nube pública: `https://climadata-peru.streamlit.app/`.
 * **Audio / Locución:**
   > "Aquí observamos el dashboard interactivo de ClimaData Perú. En la parte superior vemos el badge en tiempo real con el estado de la última ejecución del pipeline y la cantidad de filas sincronizadas. En el menú lateral podemos alternar entre el análisis individual por ciudad y la comparativa multiciudad."
   > "Al seleccionar Tacna, apreciamos su marcada aridez con casi nula precipitación y temperaturas templadas constantes. Al cambiar a Arequipa, resalta su fuerte oscilación térmica diaria de hasta 15 grados y la concentración de lluvias en el verano andino. Finalmente, en Lima observamos el patrón marítimo de alta humedad y baja amplitud térmica. La pestaña de auditoría expone el linaje de datos de dbt y el resultado de los controles de calidad."

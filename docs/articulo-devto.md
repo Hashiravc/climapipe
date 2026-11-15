@@ -245,5 +245,5 @@ Durante el desarrollo se presentaron los siguientes desafíos técnicos:
 ## 15. Enlaces del proyecto
 
 * **Código fuente en GitHub:** [https://github.com/Hashiravc/climapipe](https://github.com/Hashiravc/climapipe)
-* **Dashboard interactivo:** [https://share.streamlit.io/](https://share.streamlit.io/)
+* **Dashboard interactivo en la nube:** [https://climadata-peru.streamlit.app/](https://climadata-peru.streamlit.app/)
 * **Guion del video demostrativo:** [docs/video-script.md](docs/video-script.md)
