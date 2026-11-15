@@ -8,6 +8,15 @@ is not configured or temporarily unreachable.
 from __future__ import annotations
 
 import datetime
+import os
+import pathlib
+import sys
+
+# Asegurar que la raíz del repositorio esté en sys.path
+ROOT_DIR = pathlib.Path(__file__).resolve().parent.parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 from typing import Dict, List, Optional, Tuple
 import pandas as pd
 from sqlalchemy import create_engine, text
@@ -21,11 +30,14 @@ logger = setup_logger("dashboard_db")
 
 def get_db_engine():
     """Retorna un engine de base de datos de solo lectura."""
-    # En Streamlit Cloud, st.secrets puede contener NEON_DATABASE_URL o DB_*
     conn_str = None
-    if hasattr(st, "secrets") and "NEON_DATABASE_URL" in st.secrets:
-        conn_str = st.secrets["NEON_DATABASE_URL"]
-    elif settings.DATABASE_URL:
+    try:
+        if hasattr(st, "secrets") and "NEON_DATABASE_URL" in st.secrets:
+            conn_str = st.secrets["NEON_DATABASE_URL"]
+    except Exception as e:
+        logger.debug(f"st.secrets no disponible o no accesible: {e}")
+
+    if not conn_str and settings.DATABASE_URL:
         conn_str = settings.get_connection_url(readonly=True)
 
     if not conn_str:

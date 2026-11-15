@@ -7,6 +7,15 @@ from Tacna, Arequipa, and Lima, backed by Neon PostgreSQL and transformed via db
 from __future__ import annotations
 
 import datetime
+import os
+import pathlib
+import sys
+
+# Asegurar que la raíz del repositorio esté en sys.path (crítico para Streamlit Cloud)
+ROOT_DIR = pathlib.Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import pandas as pd
 import streamlit as st
 
